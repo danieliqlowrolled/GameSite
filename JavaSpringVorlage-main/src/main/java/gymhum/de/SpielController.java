@@ -63,8 +63,10 @@ public class SpielController {
     private void initFeld(){
         for(int i = 0; i < 3; i++){
             for(int k = 0; k < 3; k++){
-                getFelder()[i][k] = new Feld(i, k);
-                System.out.println("Feld mit Höhe " + i + " und breite " + k +" ist " + getFelder()[i][k].getIstFrei());
+                getFelder()[i][k] = new Feld();
+                getFelder()[i][k].setHoehe(i);
+                getFelder()[i][k].setBreite(k);
+                System.out.println("Feld mit Höhe " + i + " und Breite " + k +" ist " + getFelder()[i][k].getIstFrei());
             }
         }
     }

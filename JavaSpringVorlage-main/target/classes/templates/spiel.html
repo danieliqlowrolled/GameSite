@@ -38,9 +38,12 @@
                 </span>
             </td>
         </tr>
-        <a class="btn btn-primary" role="button" th:href="@{/neuesSpiel}">Neues Spiel</a>
     </span>
 </table>
+
+<span th:if="${gewonnen.getGewonnen()}==true">
+    <a class="btn btn-primary" role="button" th:href="@{/neuesSpiel}">Neues Spiel</a>
+</span>
 
 
 <span th:if="${gewonnen.getGewonnen()}==true">
