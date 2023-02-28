@@ -21,7 +21,7 @@ public class SpielController {
         setP1(new Spieler(false));
         setG1(new Gewonnen(false));
         initFeld();
-        TestWerte();
+        // TestWerte();
         Pruefung();
     }
 
@@ -36,21 +36,18 @@ public class SpielController {
 
     
     @GetMapping("/addstein")
-    public String addStein(@RequestParam(name="activePage", required = true, defaultValue = "spiel") String activePage, @RequestParam(name="id", required = true) int id, @RequestParam(name="hoehe", required = true) int hoehe, @RequestParam(name="breite", required = true) int breite, Model model){
-        
-        if(getFelder()[hoehe][id].getIstFrei()) {
-            if(p1.getActiveplayer() == true) {
-                getFelder()[hoehe][id].setIstFrei(false);
-                getFelder()[hoehe][id].setZustand(true);
-                p1.setActiveplayer(false);
-                System.out.println("Feld " + hoehe + " " + id +" wurde geändert in O");   
-            } 
-            else if(p1.getActiveplayer()== false) {
-                getFelder()[hoehe][id].setIstFrei(false);
-                getFelder()[hoehe][id].setZustand(false);
-                p1.setActiveplayer(true);   
-                System.out.println("Feld " + hoehe + " " + id +" wurde geändert in X");          
-            }             
+    public String addStein(@RequestParam(name="activePage", required = true, defaultValue = "spiel") String activePage, @RequestParam(name="hoehe", required = true) int hoehe, @RequestParam(name="breite", required = true) int breite, Model model){
+        if(p1.getActiveplayer() == true) {
+            getFelder()[hoehe][breite].setIstFrei(false);
+            getFelder()[hoehe][breite].setZustand(true);
+            p1.setActiveplayer(false);
+            System.out.println("Feld " + hoehe + " " + breite +" wurde geändert in O");   
+        } 
+        else if(p1.getActiveplayer()== false) {
+            getFelder()[hoehe][breite].setIstFrei(false);
+            getFelder()[hoehe][breite].setZustand(false);
+            p1.setActiveplayer(true);   
+            System.out.println("Feld " + hoehe + " " + breite +" wurde geändert in X");          
         }
         Pruefung();
         return "redirect:/spiel";
@@ -66,7 +63,8 @@ public class SpielController {
     private void initFeld(){
         for(int i = 0; i < 3; i++){
             for(int k = 0; k < 3; k++){
-                getFelder()[i][k] = new Feld();
+                getFelder()[i][k] = new Feld(i, k);
+                System.out.println("Feld mit Höhe " + i + " und breite " + k +" ist " + getFelder()[i][k].getIstFrei());
             }
         }
     }

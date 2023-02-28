@@ -7,7 +7,7 @@ public class Feld {
     boolean zustand;
     // Zustand true=O und false=X
 
-    public Feld(){
+    public Feld(int hoehe, int breite){
         setIstFrei(true);
         setZustand(true);
     }
