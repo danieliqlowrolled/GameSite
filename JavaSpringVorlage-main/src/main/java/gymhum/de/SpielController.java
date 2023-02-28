@@ -57,54 +57,21 @@ public class SpielController {
     public String neuesSpiel(@RequestParam(name="activePage", required = true, defaultValue = "spiel") String activePage) {
         initFeld();
         getG1().setGewonnen(false);
+        System.out.println("Spielfeld wurde zurückgesetzt");
         return "redirect:/spiel";
     }
 
+
+    // Feld wird erstellt
     private void initFeld(){
         for(int i = 0; i < 3; i++){
             for(int k = 0; k < 3; k++){
                 getFelder()[i][k] = new Feld();
                 getFelder()[i][k].setHoehe(i);
                 getFelder()[i][k].setBreite(k);
-                System.out.println("Feld mit Höhe " + i + " und Breite " + k +" ist " + getFelder()[i][k].getIstFrei());
+                System.out.println("Feld mit Höhe " + i + " und Breite " + k +" wurde erstellt");
             }
         }
-    }
-
-    // Testwerte für Gewinne werden aufgerufen
-    private void TestWerte(){
-        // Test Horizontal
-        felder[0][0].setIstFrei(false);
-        felder[0][0].setZustand(false);
-        felder[0][1].setIstFrei(false);
-        felder[0][1].setZustand(false);
-        felder[0][2].setIstFrei(false);
-        felder[0][2].setZustand(false);
-
-        // Test Vertikal
-        felder[0][0].setIstFrei(false);
-        felder[0][0].setZustand(false);
-        felder[1][0].setIstFrei(false);
-        felder[1][0].setZustand(false);
-        felder[2][0].setIstFrei(false);
-        felder[2][0].setZustand(false);
-
-        // Test Schräg Unten
-        felder[0][0].setIstFrei(false);
-        felder[0][0].setZustand(false);
-        felder[1][1].setIstFrei(false);
-        felder[1][1].setZustand(false);
-        felder[2][2].setIstFrei(false);
-        felder[2][2].setZustand(false);
-
-        // Test Schräg Oben
-        felder[2][0].setIstFrei(false);
-        felder[2][0].setZustand(false);
-        felder[1][1].setIstFrei(false);
-        felder[1][1].setZustand(false);
-        felder[0][2].setIstFrei(false);
-        felder[0][2].setZustand(false);
-
     }
 
     // Prüfungen für Gewinnszenarios werden durchgeführt
