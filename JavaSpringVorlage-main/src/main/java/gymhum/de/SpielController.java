@@ -28,6 +28,19 @@ public class SpielController {
         Pruefung();
     }
 
+
+    @GetMapping("/spielstartseite")
+    public String SpielStartSeite(@RequestParam(name="activePage", required = false, defaultValue = "spielstartseite") String activePage, Model model){
+        model.addAttribute("activePage", "spielstartseite");
+        return "index.html";
+    }
+
+    @GetMapping("/spielregeln")
+    public String Regeln(@RequestParam(name="activePage", required = false, defaultValue = "spielregeln") String activePage, Model model){
+        model.addAttribute("activePage", "spielregeln");
+        return "index.html";
+    }
+
     @GetMapping("/spiel")
     public String showSpiel(@RequestParam(name="activePage", required = false, defaultValue = "spiel") String activePage, Model model){
         model.addAttribute("activePage", "spiel");
