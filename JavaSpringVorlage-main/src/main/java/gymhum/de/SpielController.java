@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import gymhum.de.model.Feld;
 import gymhum.de.model.Gewonnen;
 import gymhum.de.model.Spieler;
+import gymhum.de.model.Unentschieden;
 
 @Controller
 public class SpielController {
@@ -15,11 +16,13 @@ public class SpielController {
     Feld[][] felder;
     Spieler p1;
     Gewonnen g1;
+    Unentschieden u1;
     
     public SpielController(){
         setFelder(new Feld[3][3]);
         setP1(new Spieler(false));
         setG1(new Gewonnen(false));
+        setU1(new Unentschieden(false));
         initFeld();
         // TestWerte();
         Pruefung();
@@ -31,6 +34,7 @@ public class SpielController {
         model.addAttribute("felder", getFelder());
         model.addAttribute("spieler", getP1());
         model.addAttribute("gewonnen", getG1());
+        model.addAttribute("unentschieden", getU1());
         return "index.html";
     }
 
@@ -57,6 +61,7 @@ public class SpielController {
     public String neuesSpiel(@RequestParam(name="activePage", required = true, defaultValue = "spiel") String activePage) {
         initFeld();
         getG1().setGewonnen(false);
+        getU1().setUnentschieden(false);
         System.out.println("Spielfeld wurde zurückgesetzt");
         return "redirect:/spiel";
     }
@@ -130,6 +135,12 @@ public class SpielController {
                 g1.setGewonnen(true);
             }
         }
+
+
+        if(getFelder()[0][0].getIstFrei() == false && getFelder()[0][1].getIstFrei() == false && getFelder()[0][2].getIstFrei() == false && getFelder()[1][0].getIstFrei() == false && getFelder()[1][1].getIstFrei() == false && getFelder()[1][2].getIstFrei() == false && getFelder()[2][0].getIstFrei() == false && getFelder()[2][1].getIstFrei() == false && getFelder()[2][2].getIstFrei() == false){
+            System.out.println("Es wurde ein Unentschieden erreicht.");
+            u1.setUnentschieden(true);
+        }
     }
 
 
@@ -158,6 +169,14 @@ public class SpielController {
 
     public Gewonnen getG1() {
         return g1;
+    }
+
+    public void setU1(Unentschieden u1) {
+        this.u1 = u1;
+    }
+
+    public Unentschieden getU1() {
+        return u1;
     }
 
 }

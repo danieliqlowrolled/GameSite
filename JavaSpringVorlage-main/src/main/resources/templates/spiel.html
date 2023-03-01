@@ -10,21 +10,41 @@
 <hr>
 
 <table class="table table-bordered text-center">
+    <!-- Tabelle im Zustand ohne Gewinn -->
     <span th:unless="${gewonnen.getGewonnen()}==true">
-        <tr th:each="feld, counter: ${felder}">
-            <td th:each="f, counter: ${feld}">
-                <span th:if="${f.getIstFrei()}==true">
-                    <a class="btn btn-dark" role="button" th:href="@{/addstein(hoehe=${f.getHoehe()}, breite=${f.getBreite()})}">Setzen</a>
-                </span>
-    
-                <span th:unless="${f.getIstFrei()}==true">
-                    <span th:if="${f.getZustand()}==true">O</span>
-                    <span th:unless="${f.getZustand()}==true">X</span>
-                </span>
-            </td>
-        </tr>
+        <span th:unless="${unentschieden.getUnentschieden()}==true">
+            <tr th:each="feld, counter: ${felder}">
+                <td th:each="f, counter: ${feld}">
+                    <span th:if="${f.getIstFrei()}==true">
+                        <a class="btn btn-dark" role="button" th:href="@{/addstein(hoehe=${f.getHoehe()}, breite=${f.getBreite()})}">Setzen</a>
+                    </span>
+        
+                    <span th:unless="${f.getIstFrei()}==true">
+                        <span th:if="${f.getZustand()}==true">O</span>
+                        <span th:unless="${f.getZustand()}==true">X</span>
+                    </span>
+                </td>
+            </tr>
+        </span>
+
+        <!-- Tabelle im Zustand ohne Gewinn aber Unentschieden -->
+        <span th:if="${unentschieden.getUnentschieden()}==true">
+            <tr th:each="feld, counter: ${felder}">
+                <td th:each="f, counter: ${feld}">
+                    <span th:if="${f.getIstFrei()}==true">
+                        <a class="btn btn-dark disabled" role="button" th:href="@{/addstein(hoehe=${f.getHoehe()}, breite=${f.getBreite()})}">Setzen</a>
+                    </span>
+        
+                    <span th:unless="${f.getIstFrei()}==true">
+                        <span th:if="${f.getZustand()}==true">O</span>
+                        <span th:unless="${f.getZustand()}==true">X</span>
+                    </span>
+                </td>
+            </tr>
+        </span>
     </span>
     
+    <!-- Tabelle im Zustand mit Gewinn -->
     <span th:if="${gewonnen.getGewonnen()}==true">
         <tr th:each="feld, counter: ${felder}">
             <td th:each="f, counter: ${feld}">
@@ -41,35 +61,62 @@
     </span>
 </table>
 
+<!-- Buttons für neues Spiel erscheinen sowohl bei Gewinn als auch Unentschieden -->
 <span th:if="${gewonnen.getGewonnen()}==true">
     <a class="btn btn-primary" role="button" th:href="@{/neuesSpiel}">Neues Spiel</a>
 </span>
+<span th:if="${unentschieden.getUnentschieden()}==true">
+    <a class="btn btn-primary" role="button" th:href="@{/neuesSpiel}">Neues Spiel</a>
+</span>
 
-
+<!-- Pop-Up bei festgestelltem Gewinn eines Spielers-->
 <span th:if="${gewonnen.getGewonnen()}==true">
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Es gibt einen Gewinner</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Da der Spieler gewechselt wird, bevor die Prüfung hier vorgenommen wird, ist es immer der vorherige Spieler, welcher gewonnen hat-->
-                    <span th:if="${spieler.getActiveplayer()}==true">
-                        <a>Spieler X hat das Spiel gewonnen!</a>
-                    </span>
-                    <span th:unless="${spieler.getActiveplayer()}==true">
-                        <a>Spieler O hat das Spiel gewonnen!</a>
-                    </span>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Spielfeld ansehen</button>
-                <a class="btn btn-primary" role="button" th:href="@{/neuesSpiel}">Neues Spiel</a>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Es gibt einen Gewinner</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Da der Spieler gewechselt wird, bevor die Prüfung hier vorgenommen wird, ist es immer der vorherige Spieler, welcher gewonnen hat-->
+                        <span th:if="${spieler.getActiveplayer()}==true">
+                            <a>Spieler X hat das Spiel gewonnen!</a>
+                        </span>
+                        <span th:unless="${spieler.getActiveplayer()}==true">
+                            <a>Spieler O hat das Spiel gewonnen!</a>
+                        </span>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Spielfeld ansehen</button>
+                    <a class="btn btn-primary" role="button" th:href="@{/neuesSpiel}">Neues Spiel</a>
                 </div>
             </div>
         </div>
     </div>
+</span>
+
+<!-- Pop-Up mit festgestelltem Unentschieden-->
+<span th:unless="${gewonnen.getGewonnen()}==true">
+    <span th:if="${unentschieden.getUnentschieden()}==true">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Unentschieden!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <a>Das Spiel endet in einem Unentschieden, es gibt keinen Gewinner</a>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Spielfeld ansehen</button>
+                        <a class="btn btn-primary" role="button" th:href="@{/neuesSpiel}">Neues Spiel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </span>
 </span>
 
 <script>
