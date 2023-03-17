@@ -20,14 +20,15 @@
           <li th:if="${activePage == 'spielstartseite'}" class="nav-item">
             <a class="nav-link active" th:href="@{/spielstartseite}">Spiel</a>
           </li>
-          <li th:if="${activePage == 'spiel'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/spiel}">Spiel</a>
-          </li>
-          <li th:if="${activePage == 'spielregeln'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/spielregeln}">Spiel</a>
-          </li>
-          <li th:if="${activePage == 'home'}" class="nav-item">
+          <li th:unless="${activePage == 'spielstartseite'}" class="nav-item">
             <a class="nav-link" th:href="@{/spielstartseite}">Spiel</a>
+          </li>
+
+          <li th:if="${activePage == 'minesweeper'}" class="nav-item">
+            <a class="nav-link active" th:href="@{/minesweeper}">Minesweeper</a>
+          </li>
+          <li th:unless="${activePage == 'minesweeper'}" class="nav-item">
+            <a class="nav-link" th:href="@{/minesweeper}">Minesweeper</a>
           </li>
         </ul>
       </div>

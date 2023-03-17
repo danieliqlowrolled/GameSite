@@ -1,4 +1,4 @@
-package gymhum.de.model;
+package gymhum.de.model.tictactoe;
 
 public class Spieler {
     boolean activeplayer;

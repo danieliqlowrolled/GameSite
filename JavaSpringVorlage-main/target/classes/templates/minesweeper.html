@@ -1,0 +1,74 @@
+<h2>Minesweeper</h2>
+<hr>
+
+<table class="table table-bordered text-center">
+    <!-- Tabelle im Zustand ohne Gewinn -->
+    <!--
+    <span th:unless="${gewonnen.getGewonnen()}==true">
+        <span th:unless="${unentschieden.getUnentschieden()}==true">
+            <tr th:each="feld, counter: ${felder}">
+                <td style="width:33.3%" th:each="f, counter: ${feld}">
+                    <span th:if="${f.getIstFrei()}==true">
+                        <a class="btn btn-transparent" role="button" style="width:100%" th:href="@{/addstein(hoehe=${f.getHoehe()}, breite=${f.getBreite()})}">
+                            <p class="text-white"> Setzen </p>
+                        </a>
+                    </span>
+        
+                    <span th:unless="${f.getIstFrei()}==true">
+                        <span th:if="${f.getZustand()}==true">
+                            <h2>O</h2>
+                        </span>
+                        <span th:unless="${f.getZustand()}==true">
+                            <h2>X</h2>
+                        </span>
+                    </span>
+                </td>
+            </tr>
+        </span>
+    -->
+    
+        <!-- Tabelle im Zustand ohne Gewinn aber Unentschieden -->
+        <!--
+        <span th:if="${unentschieden.getUnentschieden()}==true">
+            <tr th:each="feld, counter: ${felder}">
+                <td style="width:33,3%" th:each="f, counter: ${feld}">
+                    <span th:if="${f.getIstFrei()}==true">
+                         
+                    </span>
+        
+                    <span th:unless="${f.getIstFrei()}==true">
+                        <span th:if="${f.getZustand()}==true">
+                            <h2>O</h2>
+                        </span>
+                        <span th:unless="${f.getZustand()}==true">
+                            <h2>X</h2>
+                        </span>
+                    </span>
+                </td>
+            </tr>
+        </span>
+    </span>
+-->
+    <!-- Tabelle im Zustand ohne Gewinn oder Verlust -->
+    <span th:if="${ende.getGewonnen()}==false">
+        <span th:if="${ende.getVerloren()}==false">
+            <tr th:each="minefeld, counter: ${minefelder}">
+                <td th:each="f, counter: ${minefeld}">
+                    <span th:if="${f.getIstFreigelegt()}==true">
+                        <span th:if="${f.getIstBombe()}==true">
+                            B
+                        </span>
+                        <span th:unless="${f.getIstBombe()}==true">
+                            <!-- <a th:text="${f.getHoehe}"></a> + <a th:text="${f.getBreite}"></a> -->
+                            <a th:text="${f.getNearBombs()}"></a>
+                        </span>
+                    </span>
+        
+                    <span th:unless="${f.getIstFreigelegt()}==true">
+                        []
+                    </span>
+                </td>
+            </tr>
+        </span>
+    </span>
+</table>

@@ -5,10 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import gymhum.de.model.Feld;
-import gymhum.de.model.Gewonnen;
-import gymhum.de.model.Spieler;
-import gymhum.de.model.Unentschieden;
+import gymhum.de.model.tictactoe.Feld;
+import gymhum.de.model.tictactoe.Gewonnen;
+import gymhum.de.model.tictactoe.Spieler;
+import gymhum.de.model.tictactoe.Unentschieden;
 
 @Controller
 public class SpielController {
@@ -36,13 +36,13 @@ public class SpielController {
     }
 
     @GetMapping("/spielregeln")
-    public String Regeln(@RequestParam(name="activePage", required = false, defaultValue = "spielregeln") String activePage, Model model){
-        model.addAttribute("activePage", "spielregeln");
+    public String Regeln(@RequestParam(name="activePage", required = false, defaultValue = "spielstartseite") String activePage, Model model){
+        model.addAttribute("activePage", "spielstartseite");
         return "index.html";
     }
 
     @GetMapping("/spiel")
-    public String showSpiel(@RequestParam(name="activePage", required = false, defaultValue = "spiel") String activePage, Model model){
+    public String showSpiel(@RequestParam(name="activePage", required = false, defaultValue = "spielstartseite") String activePage, Model model){
         model.addAttribute("activePage", "spiel");
         model.addAttribute("felder", getFelder());
         model.addAttribute("spieler", getP1());
@@ -87,7 +87,7 @@ public class SpielController {
                 getFelder()[i][k] = new Feld();
                 getFelder()[i][k].setHoehe(i);
                 getFelder()[i][k].setBreite(k);
-                System.out.println("Feld mit Höhe " + i + " und Breite " + k +" wurde erstellt");
+                System.out.println("Tictactoe-Feld mit Höhe " + i + " und Breite " + k +" wurde erstellt");
             }
         }
     }
