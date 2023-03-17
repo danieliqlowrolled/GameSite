@@ -65,7 +65,32 @@
                     </span>
         
                     <span th:unless="${f.getIstFreigelegt()}==true">
-                        []
+                        <a class="btn btn-transparent" role="button" th:href="@{/reveal(hoehe=${f.getHoehe()}, breite=${f.getBreite()})}">
+                            <p class="text-white"> Setzen </p>
+                        </a>
+                    </span>
+                </td>
+            </tr>
+        </span>
+    </span>
+    <span th:if="${ende.getGewonnen()}==false">
+        <span th:unless="${ende.getVerloren()}==false">
+            <h2>Verloren</h2>
+            <tr th:each="minefeld, counter: ${minefelder}">
+                <td th:each="f, counter: ${minefeld}">
+                    <span th:if="${f.getIstFreigelegt()}==true">
+                        <span th:if="${f.getIstBombe()}==true">
+                            B
+                        </span>
+                        <span th:unless="${f.getIstBombe()}==true">
+                            <a th:text="${f.getNearBombs()}"></a>
+                        </span>
+                    </span>
+        
+                    <span th:unless="${f.getIstFreigelegt()}==true">
+                        <a class="btn btn-transparent" role="button" th:href="@{/reveal(hoehe=${f.getHoehe()}, breite=${f.getBreite()})}">
+                            <p class="text-white"> Setzen </p>
+                        </a>
                     </span>
                 </td>
             </tr>

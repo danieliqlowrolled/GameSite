@@ -37,6 +37,16 @@ public class MineSweeperController {
         return "index.html";
     }
 
+    @GetMapping("/reveal")
+    public String reveal(@RequestParam(name="activePage", required = true, defaultValue = "minesweeper") String activePage, @RequestParam(name="hoehe", required = true) int hoehe, @RequestParam(name="breite", required = true) int breite, Model model){
+        getMinefelder()[hoehe][breite].setIstFreigelegt(true);
+        System.out.println("Feld " + hoehe + " " + breite +" wurde freigelegt");
+        if(getMinefelder()[hoehe][breite].getIstBombe() == true){
+            getEnde().setVerloren(true);
+        }
+        return "redirect:/minesweeper";
+    }
+
     private void initFeldandBombs(){
         int counter = 0;
         for(int h = 0; h < 10; h++){

@@ -8,7 +8,7 @@ public class minefeld {
     boolean istBombe;
 
     public minefeld(){
-        setIstFreigelegt(true);
+        setIstFreigelegt(false);
         setIstBombe(false);
     }
     public void setBreite(int breite) {
