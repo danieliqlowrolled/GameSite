@@ -15,8 +15,10 @@ public class MineSweeperController {
 
     minefeld[][] minefelder;
     Ende ende;
-    int totalbombs;
     int expectedbombs;
+    int totalbombs;
+    minefeld[] bombs;
+    boolean firstReveal;
 
     Random rand = new Random();
     
@@ -25,6 +27,8 @@ public class MineSweeperController {
         setEnde(new Ende());
         setExpectedbombs(20); // Repräsentiert die Gesamtanzahl an Bomben auf dem Spielfeld
         setTotalbombs(0);
+        setBombs(new minefeld[expectedbombs]);
+        setFirstReveal(true);
         initFeldandBombs();
         Anzeige();
     }
@@ -41,14 +45,49 @@ public class MineSweeperController {
     public String reveal(@RequestParam(name="activePage", required = true, defaultValue = "minesweeper") String activePage, @RequestParam(name="hoehe", required = true) int hoehe, @RequestParam(name="breite", required = true) int breite, Model model){
         getMinefelder()[hoehe][breite].setIstFreigelegt(true);
         System.out.println("Feld " + hoehe + " " + breite +" wurde freigelegt");
+
+        if(firstReveal == true){
+            if((getMinefelder()[hoehe][breite].getHoehe() != 0) && (getMinefelder()[hoehe][breite].getHoehe() != 9) && (getMinefelder()[hoehe][breite].getBreite() != 0) && (getMinefelder()[hoehe][breite].getBreite() != 0)){
+                getMinefelder()[hoehe][breite].setIstFreigelegt(true);
+                for(int c = -1; c <= 1; c++){
+                    for(int d = -1; d <= 1; d++){
+                        if(getMinefelder()[hoehe+c][breite+d].getIstBombe() == false){
+                            getMinefelder()[hoehe+c][breite+d].setIstFreigelegt(true);
+                        }
+                    }
+                }
+            }
+            setFirstReveal(false);
+        }
+        
         if(getMinefelder()[hoehe][breite].getIstBombe() == true){
             getEnde().setVerloren(true);
+            for(int a = 0; a < 10; a++){
+                for(int b = 0; b < 10; b ++){
+                    if(getMinefelder()[a][b].getIstBombe() == true){
+                        getMinefelder()[hoehe][breite].setIstFreigelegt(true);
+                    }
+                }
+            }
         }
+        return "redirect:/minesweeper";
+    }
+
+    @GetMapping("/newMinesweeper") 
+    public String newMinesweeper(@RequestParam(name="activePage", required = true, defaultValue = "spiel") String activePage) {
+        initFeldandBombs();
+        getEnde().setGewonnen(false);
+        getEnde().setVerloren(false);
+        initFeldandBombs();
+        Anzeige();
+        setFirstReveal(true);
+        System.out.println("Spiel Minesweeper wurde zurückgesetzt");
         return "redirect:/minesweeper";
     }
 
     private void initFeldandBombs(){
         int counter = 0;
+        setTotalbombs(0);
         for(int h = 0; h < 10; h++){
             for(int b = 0; b < 10; b++){
                 getMinefelder()[h][b] = new minefeld();
@@ -217,6 +256,12 @@ public class MineSweeperController {
     public void setTotalbombs(int totalbombs) {
         this.totalbombs = totalbombs;
     }
+    public void setBombs(minefeld[] bombs) {
+        this.bombs = bombs;
+    }
+    public void setFirstReveal(boolean firstReveal) {
+        this.firstReveal = firstReveal;
+    }
     public minefeld[][] getMinefelder() {
         return minefelder;
     }
@@ -228,5 +273,11 @@ public class MineSweeperController {
     }
     public int getTotalbombs() {
         return totalbombs;
+    }
+    public minefeld[] getBombs() {
+        return bombs;
+    }
+    public boolean getFirstReveal() {
+        return firstReveal;
     }
 }
