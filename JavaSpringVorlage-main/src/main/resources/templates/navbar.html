@@ -30,13 +30,6 @@
           <li th:unless="${activePage == 'minesweeper'}" class="nav-item">
             <a class="nav-link" th:href="@{/minesweeper}">Minesweeper</a>
           </li>
-
-          <li th:if="${activePage == 'Memory'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/memory}">Memory</a>
-          </li>
-          <li th:unless="${activePage == 'Memory'}" class="nav-item">
-            <a class="nav-link" th:href="@{/memory}">Memory</a>
-          </li>
         </ul>
       </div>
     </div>
