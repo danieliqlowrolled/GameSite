@@ -33,6 +33,12 @@ public class MineSweeperController {
         Anzeige();
     }
 
+    @GetMapping("/msStartseite")
+    public String msStartseite(@RequestParam(name="activePage", required = false, defaultValue = "msStartseite") String activePage, Model model){
+        model.addAttribute("activePage", "msStartseite");
+        return "index.html";
+    }
+
     @GetMapping("/minesweeper")
     public String MineSweeper(@RequestParam(name="activePage", required = false, defaultValue = "minesweeper") String activePage, Model model){
         model.addAttribute("activePage", "minesweeper");
