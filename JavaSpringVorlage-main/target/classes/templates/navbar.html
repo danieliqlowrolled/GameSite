@@ -24,11 +24,11 @@
             <a class="nav-link" th:href="@{/spielstartseite}">Spiel</a>
           </li>
 
-          <li th:if="${activePage == 'minesweeper'}" class="nav-item">
-            <a class="nav-link active" th:href="@{/minesweeper}">Minesweeper</a>
+          <li th:if="${activePage == 'msStartseite'}" class="nav-item">
+            <a class="nav-link active" th:href="@{/msStartseite}">Minesweeper</a>
           </li>
-          <li th:unless="${activePage == 'minesweeper'}" class="nav-item">
-            <a class="nav-link" th:href="@{/minesweeper}">Minesweeper</a>
+          <li th:unless="${activePage == 'msStartseite'}" class="nav-item">
+            <a class="nav-link" th:href="@{/msStartseite}">Minesweeper</a>
           </li>
         </ul>
       </div>
